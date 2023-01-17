@@ -7,17 +7,21 @@ import {
   HttpStatus,
 } from '@nestjs/common';
 import { Request } from 'express';
+import { Public } from 'src/auth/guard.decorator';
 import { UserService } from 'src/users/services/user.service';
 import { CreateUserDto } from '../../dto/createUser.dto';
 
 @Controller('user')
 export class UserController {
   constructor(private userService: UserService) {}
+
+  @Public()
   @Get()
   user() {
     return 'api user';
   }
 
+  @Public()
   @Post('/create')
   async createUser(@Req() request: Request) {
     try {
