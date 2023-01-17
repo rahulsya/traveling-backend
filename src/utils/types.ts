@@ -3,3 +3,8 @@ export type CreateUser = {
   email: string;
   password: string;
 };
+
+export type ValidateUserDetails = {
+  username: string;
+  password: string;
+};

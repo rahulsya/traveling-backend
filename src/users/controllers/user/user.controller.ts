@@ -36,9 +36,4 @@ export class UserController {
       );
     }
   }
-
-  @Post('/login')
-  login() {
-    return 'login path';
-  }
 }
