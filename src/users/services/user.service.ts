@@ -30,4 +30,14 @@ export class UserService {
     const user = await this.userRepository.findOne({ where: { username } });
     return user;
   }
+
+  async allUser(): Promise<Array<User>> {
+    const users = await this.userRepository.find({
+      select: {
+        username: true,
+        email: true,
+      },
+    });
+    return users;
+  }
 }

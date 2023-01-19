@@ -5,6 +5,7 @@ import {
   Req,
   HttpException,
   HttpStatus,
+  Response,
 } from '@nestjs/common';
 import { Request } from 'express';
 import { Public } from 'src/auth/guard.decorator';
@@ -39,5 +40,14 @@ export class UserController {
         },
       );
     }
+  }
+
+  @Get('/all')
+  async findAll(@Response() res) {
+    const users = await this.userService.allUser();
+    return res.json({
+      status: 'success',
+      data: users,
+    });
   }
 }
