@@ -11,6 +11,7 @@ import { AuthModule } from './auth/auth.module';
 import { entities } from './utils/entity';
 
 import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
+import { HotelsModule } from './hotels/hotels.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
       synchronize: true,
     }),
     AuthModule,
+    HotelsModule,
   ],
   controllers: [AppController],
   providers: [

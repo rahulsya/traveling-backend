@@ -1,2 +1,3 @@
 import { User } from './user.entity';
-export const entities = [User];
+import { Hotels } from './hotels.entity';
+export const entities = [User, Hotels];
