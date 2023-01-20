@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { Images } from './images.entity';
 
 @Entity()
 export class Hotels {
@@ -17,4 +18,6 @@ export class Hotels {
   description: string;
   @Column('integer')
   price: number;
+  @OneToMany(() => Images, (image) => image.hotel, { cascade: true })
+  images: Images[];
 }

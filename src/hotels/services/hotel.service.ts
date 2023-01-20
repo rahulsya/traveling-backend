@@ -18,7 +18,11 @@ export class HotelService {
   }
 
   async allHotel(): Promise<Hotels[]> {
-    const getHotel = await this.hotelsRepository.find();
+    const getHotel = await this.hotelsRepository.find({
+      relations: {
+        images: true,
+      },
+    });
     return getHotel;
   }
 }
