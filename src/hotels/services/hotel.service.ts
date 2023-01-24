@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
@@ -24,5 +24,20 @@ export class HotelService {
       },
     });
     return getHotel;
+  }
+
+  async getDetailHotel(id: number): Promise<Hotels> {
+    const hotel = await this.hotelsRepository.findOne({
+      where: {
+        id,
+      },
+      relations: {
+        images: true,
+      },
+    });
+
+    if (!hotel)
+      throw new HttpException('Hotel not found', HttpStatus.NOT_FOUND);
+    return hotel;
   }
 }

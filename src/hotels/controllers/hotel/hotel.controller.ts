@@ -1,4 +1,11 @@
-import { Controller, Request, Response, Post, Get } from '@nestjs/common';
+import {
+  Controller,
+  Request,
+  Response,
+  Post,
+  Get,
+  Param,
+} from '@nestjs/common';
 import { HttpStatus } from '@nestjs/common/enums';
 import { HttpException } from '@nestjs/common/exceptions';
 import { Public } from 'src/auth/guard.decorator';
@@ -18,6 +25,12 @@ export class HotelController {
       status: 'success',
       data: hotels,
     });
+  }
+
+  @Public()
+  @Get('/detail/:id')
+  async detailHotel(@Param() params) {
+    return await this.hotelService.getDetailHotel(params?.id);
   }
 
   @Public()
