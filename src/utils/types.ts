@@ -16,3 +16,10 @@ export type ValidateCreateHotel = {
   description: string;
   price: number;
 };
+
+export type ValidateCreateOrder = {
+  start_date: Date;
+  end_date: Date;
+  hotelId: number;
+  user: any;
+};

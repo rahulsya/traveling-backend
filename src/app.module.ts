@@ -13,6 +13,7 @@ import { entities } from './utils/entity';
 import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
 import { HotelsModule } from './hotels/hotels.module';
 import { ConfigModule } from '@nestjs/config';
+import { OrdersModule } from './orders/orders.module';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { ConfigModule } from '@nestjs/config';
     }),
     AuthModule,
     HotelsModule,
+    OrdersModule,
   ],
   controllers: [AppController],
   providers: [

@@ -1,5 +1,6 @@
 import { HttpException, HttpStatus } from '@nestjs/common';
 import { hashSync, genSaltSync, compareSync } from 'bcrypt';
+import * as moment from 'moment';
 import { diskStorage } from 'multer';
 import { extname } from 'path';
 export const hashPassword = (plaintPassword: string) => {
@@ -41,4 +42,9 @@ export const formatFileName = (file): string => {
   const fileExt = fileName[fileName.length - 1];
 
   return `${fileName[0]}.${fileExt}`;
+};
+
+export const generateInvoiceNumber = (): string => {
+  const DateForm = moment().format('YYYYMMDDss');
+  return `INV-${DateForm}`;
 };
