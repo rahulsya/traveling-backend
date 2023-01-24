@@ -2,12 +2,11 @@ import {
   Controller,
   Get,
   Post,
-  Req,
+  Body,
   HttpException,
   HttpStatus,
   Response,
 } from '@nestjs/common';
-import { Request } from 'express';
 import { Public } from 'src/auth/guard.decorator';
 import { UserService } from 'src/users/services/user.service';
 import { CreateUserDto } from '../../dto/createUser.dto';
@@ -24,10 +23,9 @@ export class UserController {
 
   @Public()
   @Post('/create')
-  async createUser(@Req() request: Request) {
+  async createUser(@Body() userData: CreateUserDto) {
     try {
-      const data: CreateUserDto = request.body;
-      return await this.userService.createUser(data);
+      return await this.userService.createUser(userData);
     } catch (error) {
       throw new HttpException(
         {
