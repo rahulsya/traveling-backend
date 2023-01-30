@@ -5,11 +5,10 @@ import { join } from 'path';
 import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
-  const app = await NestFactory.create<NestExpressApplication>(AppModule, {
-    cors: true,
-  });
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
+  app.enableCors();
   app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }));
   app.useStaticAssets(join(__dirname, '..', 'uploads'));
-  await app.listen(3000);
+  await app.listen(3001);
 }
 bootstrap();
