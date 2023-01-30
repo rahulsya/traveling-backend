@@ -23,9 +23,13 @@ export class UserController {
 
   @Public()
   @Post('/create')
-  async createUser(@Body() userData: CreateUserDto) {
+  async createUser(@Body() userData: CreateUserDto, @Response() res) {
     try {
-      return await this.userService.createUser(userData);
+      const user = await this.userService.createUser(userData);
+      return res.json({
+        status: 200,
+        user,
+      });
     } catch (error) {
       throw new HttpException(
         {
