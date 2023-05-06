@@ -2,6 +2,7 @@ export type CreateUser = {
   username: string;
   email: string;
   password: string;
+  role?: string;
 };
 
 export type ValidateUserDetails = {
@@ -15,6 +16,7 @@ export type ValidateCreateHotel = {
   isPopular: boolean;
   description: string;
   price: number;
+  categoryId: number;
 };
 
 export type ValidateCreateOrder = {
@@ -22,4 +24,11 @@ export type ValidateCreateOrder = {
   end_date: Date;
   hotelId: number;
   user: any;
+  first_name: string;
+  last_name: string;
+  email: string;
+  phone_number: string;
+  payment_file: string;
+  bank_name: string;
+  sender_name: string;
 };

@@ -34,6 +34,16 @@ export class HotelController {
   }
 
   @Public()
+  @Get('/hotel-categories')
+  async hotelCategories(@Response() res) {
+    const hotels = await this.hotelService.hotelCategories();
+    return res.json({
+      status: 'succes',
+      data: hotels,
+    });
+  }
+
+  @Public()
   @Post('/create')
   async create(@Request() req, @Response() res) {
     const data: CreateHotelDto = req.body;

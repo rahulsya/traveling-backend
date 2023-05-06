@@ -6,10 +6,16 @@ import {
   HttpException,
   HttpStatus,
   Response,
+  Request,
+  UseGuards,
 } from '@nestjs/common';
 import { Public } from 'src/auth/guard.decorator';
 import { UserService } from 'src/users/services/user.service';
 import { CreateUserDto } from '../../dto/createUser.dto';
+import { Role } from 'src/utils/roles';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { RolesGuard } from 'src/auth/guards/roles/roles.guard';
+import { Access } from 'src/auth/roles.decorator';
 
 @Controller('user')
 export class UserController {
@@ -44,7 +50,10 @@ export class UserController {
     }
   }
 
+  // @Public(Role.Admin)
+  @UseGuards(RolesGuard)
   @Get('/all')
+  @Access(Role.User)
   async findAll(@Response() res) {
     const users = await this.userService.allUser();
     return res.json({

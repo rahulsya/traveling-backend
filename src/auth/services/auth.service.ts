@@ -25,8 +25,14 @@ export class AuthService {
     return isValidPassword ? user : null;
   }
 
+  // return result data dari validatte lewat local stategy
   async login(user: User) {
-    const payload = { username: user.username, email: user.email, id: user.id };
+    const payload = {
+      username: user.username,
+      email: user.email,
+      id: user.id,
+      role: user.role,
+    };
     return {
       status: 'success',
       user: {

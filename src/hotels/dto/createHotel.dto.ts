@@ -1,4 +1,4 @@
-import { MinLength, MaxLength, Length, IsBoolean } from 'class-validator';
+import { MinLength, MaxLength, Length, IsBoolean, } from 'class-validator';
 export class CreateHotelDto {
   @Length(3, 25)
   name: string;
@@ -12,6 +12,7 @@ export class CreateHotelDto {
   @MaxLength(50, {
     message: 'ops max desc is 50 words',
   })
+  categoryId:number
   description: string;
   price: number;
 }

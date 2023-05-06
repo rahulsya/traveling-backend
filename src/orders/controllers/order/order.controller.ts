@@ -1,6 +1,19 @@
-import { Body, Controller, Post, Request, Get, Param } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Post,
+  Request,
+  Get,
+  Param,
+  UseInterceptors,
+  UploadedFile,
+  HttpException,
+  HttpStatus,
+} from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
 import { createOrderDto } from 'src/orders/dto/order.dto';
 import { OrderService } from 'src/orders/services/order.service';
+import { formatFileName, multerOptions } from 'src/utils/helpers';
 
 @Controller('order')
 export class OrderController {
@@ -17,10 +30,19 @@ export class OrderController {
   }
 
   @Post('/create')
-  async createOrder(@Body() orderForm: createOrderDto, @Request() req) {
+  @UseInterceptors(FileInterceptor('bank_transfer', multerOptions))
+  async createOrder(
+    @Body() orderForm: createOrderDto,
+    @Request() req,
+    @UploadedFile() file: Express.Multer.File,
+  ) {
+    if (!file) {
+      throw new HttpException('File image empty', HttpStatus.BAD_REQUEST);
+    }
     return await this.orderService.createOrder({
       ...orderForm,
       user: req.user,
+      payment_file: `${process.env.PUBLIC_ASSET_URL}/${formatFileName(file)}`,
     });
   }
 }

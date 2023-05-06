@@ -19,9 +19,12 @@ export class UserService {
     if (findUser)
       throw new HttpException('User already exists', HttpStatus.CONFLICT);
     const password = hashPassword(userDetails.password);
+    // console.log(userDetails);
+
     const newUser = await this.userRepository.create({
       ...userDetails,
       password,
+      role: userDetails.role ? userDetails.role : 'user',
     });
     return this.userRepository.save(newUser);
   }

@@ -15,6 +15,7 @@ export class OrderService {
 
   async createOrder(data: ValidateCreateOrder) {
     const payload = {
+      ...data,
       invoice_number: generateInvoiceNumber(),
       start_date: moment(data.start_date).toDate(),
       end_date: moment(data.end_date).toDate(),

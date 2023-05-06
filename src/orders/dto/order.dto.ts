@@ -1,4 +1,4 @@
-import { IsDateString, IsInt, IsNotEmpty } from 'class-validator';
+import { IsDateString, IsNotEmpty } from 'class-validator';
 
 export class createOrderDto {
   @IsDateString()
@@ -9,7 +9,19 @@ export class createOrderDto {
   @IsNotEmpty()
   end_date: Date;
 
-  @IsInt()
   @IsNotEmpty()
   hotelId: number;
+
+  @IsNotEmpty()
+  first_name: string;
+  @IsNotEmpty()
+  last_name: string;
+  @IsNotEmpty()
+  email: string;
+  @IsNotEmpty()
+  phone_number: string;
+  @IsNotEmpty()
+  bank_name: string;
+  @IsNotEmpty()
+  sender_name: string;
 }
