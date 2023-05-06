@@ -14,6 +14,8 @@ import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
 import { HotelsModule } from './hotels/hotels.module';
 import { ConfigModule } from '@nestjs/config';
 import { OrdersModule } from './orders/orders.module';
+import { CategoriesModule } from './categories/categories.module';
+import { RolesGuard } from './auth/guards/roles/roles.guard';
 
 @Module({
   imports: [
@@ -32,6 +34,7 @@ import { OrdersModule } from './orders/orders.module';
     AuthModule,
     HotelsModule,
     OrdersModule,
+    CategoriesModule,
   ],
   controllers: [AppController],
   providers: [
@@ -39,6 +42,10 @@ import { OrdersModule } from './orders/orders.module';
     {
       provide: APP_GUARD,
       useClass: JwtAuthGuard,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: RolesGuard,
     },
   ],
 })
