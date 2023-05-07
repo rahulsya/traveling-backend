@@ -1,10 +1,11 @@
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 
 import { ValidateCreateHotel } from 'src/utils/types';
 import { Hotels } from '../../utils/entity/hotels.entity';
-import {Categories} from '../../utils/entity/categories.entity'
+import { Categories } from '../../utils/entity/categories.entity';
+import { Facility } from 'src/utils/entity/facilities.entity';
 
 @Injectable()
 export class HotelService {
@@ -12,11 +13,22 @@ export class HotelService {
     @InjectRepository(Hotels)
     private readonly hotelsRepository: Repository<Hotels>,
     @InjectRepository(Categories)
-    private readonly categoriesRepository:Repository<Categories>
+    private readonly categoriesRepository: Repository<Categories>,
+    @InjectRepository(Facility)
+    private readonly facilityRepository: Repository<Facility>,
   ) {}
 
   async createHotel(data: ValidateCreateHotel) {
-    const newHotel = await this.hotelsRepository.create({...data,categories:{id:data.categoryId}});
+    const Getfacilities = await this.facilityRepository.find({
+      where: {
+        id: In(data.facilitiesId),
+      },
+    });
+    const newHotel = await this.hotelsRepository.create({
+      ...data,
+      categories: { id: data.categoryId },
+    });
+    newHotel.facilities = [...Getfacilities];
     return this.hotelsRepository.save(newHotel);
   }
 
@@ -24,6 +36,8 @@ export class HotelService {
     const getHotel = await this.hotelsRepository.find({
       relations: {
         images: true,
+        categories: true,
+        facilities: true,
       },
     });
     return getHotel;
@@ -43,14 +57,14 @@ export class HotelService {
       throw new HttpException('Hotel not found', HttpStatus.NOT_FOUND);
     return hotel;
   }
-  async hotelCategories():Promise<any[]>{
-    const hotelCategories= await this.categoriesRepository.find({
-      relations:{
-        hotels:{
-          images:true
-        }
-      }
-    })
-    return hotelCategories
+  async hotelCategories(): Promise<any[]> {
+    const hotelCategories = await this.categoriesRepository.find({
+      relations: {
+        hotels: {
+          images: true,
+        },
+      },
+    });
+    return hotelCategories;
   }
 }

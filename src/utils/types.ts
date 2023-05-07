@@ -17,6 +17,7 @@ export type ValidateCreateHotel = {
   description: string;
   price: number;
   categoryId: number;
+  facilitiesId?: number[];
 };
 
 export type ValidateCreateOrder = {
@@ -31,4 +32,9 @@ export type ValidateCreateOrder = {
   payment_file: string;
   bank_name: string;
   sender_name: string;
+};
+
+export type ValidateCreateFacility = {
+  name: string;
+  desc: string;
 };

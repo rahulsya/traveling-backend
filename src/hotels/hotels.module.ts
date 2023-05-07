@@ -9,10 +9,13 @@ import { ImagesController } from './controllers/images/images.controller';
 import { Hotels } from 'src/utils/entity/hotels.entity';
 import { Images } from 'src/utils/entity/images.entity';
 import { Categories } from 'src/utils/entity/categories.entity';
+import { Facility } from 'src/utils/entity/facilities.entity';
+import { FacilityService } from './services/facility/facility.service';
+import { FacilityController } from './controllers/facility/facility.controller';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Hotels, Images,Categories])],
-  providers: [HotelService, ImagesService],
-  controllers: [HotelController, ImagesController],
+  imports: [TypeOrmModule.forFeature([Hotels, Images, Categories, Facility])],
+  providers: [HotelService, ImagesService, FacilityService],
+  controllers: [HotelController, ImagesController, FacilityController],
 })
 export class HotelsModule {}

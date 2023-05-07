@@ -1,6 +1,15 @@
-import { Column, Entity, PrimaryGeneratedColumn, OneToMany, ManyToOne } from 'typeorm';
+import {
+  Column,
+  Entity,
+  PrimaryGeneratedColumn,
+  OneToMany,
+  ManyToOne,
+  ManyToMany,
+  JoinTable,
+} from 'typeorm';
 import { Categories } from './categories.entity';
 import { Images } from './images.entity';
+import { Facility } from './facilities.entity';
 
 @Entity()
 export class Hotels {
@@ -21,6 +30,9 @@ export class Hotels {
   price: number;
   @OneToMany(() => Images, (image) => image.hotel, { cascade: true })
   images: Images[];
-  @ManyToOne(()=>Categories,(category=>category.hotels))
-  categories:Categories
+  @ManyToOne(() => Categories, (category) => category.hotels)
+  categories: Categories;
+  @ManyToMany(() => Facility)
+  @JoinTable()
+  facilities: Facility[];
 }
