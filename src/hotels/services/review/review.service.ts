@@ -17,6 +17,7 @@ export class ReviewService {
       const findReview = await this.repositoryReview.findOne({
         where: {
           user: { id: data.userId },
+          hotel: { id: data.hotelId },
         },
       });
       if (findReview)
