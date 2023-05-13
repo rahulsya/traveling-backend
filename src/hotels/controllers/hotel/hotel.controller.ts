@@ -5,6 +5,7 @@ import {
   Post,
   Get,
   Param,
+  Put,
 } from '@nestjs/common';
 import { HttpStatus } from '@nestjs/common/enums';
 import { HttpException } from '@nestjs/common/exceptions';
@@ -65,5 +66,12 @@ export class HotelController {
         },
       );
     }
+  }
+
+  @Put('/update/:id')
+  async update(@Request() req, @Param() params) {
+    const data = req.body;
+    const id = params.id;
+    return await this.hotelService.updateHotel(data, id);
   }
 }

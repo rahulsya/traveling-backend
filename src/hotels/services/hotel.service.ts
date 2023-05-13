@@ -1,8 +1,8 @@
-import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
+import { Injectable, HttpException, HttpStatus, Get } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { In, Repository } from 'typeorm';
 
-import { ValidateCreateHotel } from 'src/utils/types';
+import { ValidateCreateHotel, ValidateUpdateHotel } from 'src/utils/types';
 import { Hotels } from '../../utils/entity/hotels.entity';
 import { Categories } from '../../utils/entity/categories.entity';
 import { Facility } from 'src/utils/entity/facilities.entity';
@@ -50,6 +50,9 @@ export class HotelService {
       },
       relations: {
         images: true,
+        categories: true,
+        facilities: true,
+        reviews: true,
       },
     });
 
@@ -66,5 +69,33 @@ export class HotelService {
       },
     });
     return hotelCategories;
+  }
+
+  async updateHotel(data: ValidateUpdateHotel, id: number): Promise<Hotels> {
+    const hotel = await this.hotelsRepository.findOne({
+      where: {
+        id,
+      },
+    });
+    if (!hotel)
+      throw new HttpException('Data Hotel not found', HttpStatus.NOT_FOUND);
+    let updateData = data;
+    if (data.categories) {
+      updateData = { ...updateData, categories: { id: data.categories } };
+    }
+
+    if (data.facilities) {
+      const Getfacilities = await this.facilityRepository.find({
+        where: {
+          id: In(data.facilities),
+        },
+      });
+      updateData = { ...updateData, facilities: [...Getfacilities] };
+    }
+
+    return await this.hotelsRepository.save({
+      ...hotel,
+      ...updateData,
+    });
   }
 }

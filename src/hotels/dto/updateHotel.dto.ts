@@ -5,10 +5,12 @@ import {
   IsBoolean,
   IsOptional,
 } from 'class-validator';
-export class CreateHotelDto {
+export class UpdateHotelDto {
   @Length(3, 25)
+  @IsOptional()
   name: string;
   @Length(3, 25)
+  @IsOptional()
   location: string;
   @IsBoolean()
   isPopular: boolean;
