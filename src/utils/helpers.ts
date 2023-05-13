@@ -41,7 +41,7 @@ export const formatFileName = (file): string => {
   const fileName = file.originalname.split('.');
   const fileExt = fileName[fileName.length - 1];
 
-  return `${fileName[0]}.${fileExt}`;
+  return `${moment().format('YYYYMMDDss')}.${fileExt}`;
 };
 
 export const generateInvoiceNumber = (): string => {

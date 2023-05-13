@@ -4,6 +4,8 @@ import {
   UploadedFile,
   UseInterceptors,
   Body,
+  Delete,
+  Param,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { Express } from 'express';
@@ -23,5 +25,11 @@ export class ImagesController {
       data.hotelId,
       `${process.env.PUBLIC_ASSET_URL}/${formatFileName(file)}`,
     );
+  }
+
+  @Public()
+  @Delete('/delete/:id')
+  async deleteImage(@Param() params) {
+    return await this.imageService.deleteImage(params.id);
   }
 }

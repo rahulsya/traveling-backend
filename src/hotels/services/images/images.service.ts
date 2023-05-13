@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Images } from 'src/utils/entity/images.entity';
 import { Hotels } from 'src/utils/entity/hotels.entity';
 import { Repository } from 'typeorm';
+import { unlinkSync } from 'fs';
 
 @Injectable()
 export class ImagesService {
@@ -23,5 +24,19 @@ export class ImagesService {
       hotel: { id: hotelid },
     });
     return this.imageRespository.save(newImage);
+  }
+
+  async deleteImage(id) {
+    const findImage = await this.imageRespository.findOne({
+      where: { id },
+    });
+    const imageName = findImage.image_url.split('/')[1];
+    unlinkSync(`uploads/${imageName}`);
+
+    await this.imageRespository.remove(findImage);
+
+    return {
+      message: 'success delete image hotel',
+    };
   }
 }
