@@ -19,6 +19,23 @@ export type ValidateCreateHotel = {
   categoryId: number;
   facilitiesId?: number[];
 };
+export type ValidateUpdateHotel = {
+  name?: string;
+  location?: string;
+  isPopular?: boolean;
+  description?: string;
+  price?: number;
+  categories:
+    | {
+        id: number;
+      }
+    | {};
+  facilities?: {
+    id: number;
+    name: string;
+    desc: string;
+  }[];
+};
 
 export type ValidateCreateOrder = {
   start_date: Date;
@@ -37,4 +54,13 @@ export type ValidateCreateOrder = {
 export type ValidateCreateFacility = {
   name: string;
   desc: string;
+};
+
+export type ValidateCreateReview = {
+  rating: number;
+  review: string;
+  hotelId: number;
+  userId: number;
+  name: string;
+  email: string;
 };

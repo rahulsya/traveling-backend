@@ -1,4 +1,11 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  ManyToOne,
+  OneToMany,
+} from 'typeorm';
+import { Reviews } from './reviews.entity';
 
 export type UserRoleType = 'admin' | 'user';
 @Entity()
@@ -21,4 +28,6 @@ export class User {
     default: 'user',
   })
   role: string;
+  @OneToMany(() => Reviews, (review) => review.user)
+  reviews: Reviews[];
 }

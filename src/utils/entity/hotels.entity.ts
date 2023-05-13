@@ -10,6 +10,7 @@ import {
 import { Categories } from './categories.entity';
 import { Images } from './images.entity';
 import { Facility } from './facilities.entity';
+import { Reviews } from './reviews.entity';
 
 @Entity()
 export class Hotels {
@@ -32,7 +33,9 @@ export class Hotels {
   images: Images[];
   @ManyToOne(() => Categories, (category) => category.hotels)
   categories: Categories;
-  @ManyToMany(() => Facility)
+  @ManyToMany(() => Facility, { cascade: true })
   @JoinTable()
   facilities: Facility[];
+  @OneToMany(() => Reviews, (review) => review.hotel)
+  reviews: Reviews[];
 }
